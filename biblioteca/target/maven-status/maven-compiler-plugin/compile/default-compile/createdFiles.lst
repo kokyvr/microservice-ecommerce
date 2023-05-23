@@ -1,0 +1,6 @@
+com\ecommerce\biblioteca\BaseRuta.class
+com\ecommerce\biblioteca\dto\Categoria.class
+com\ecommerce\biblioteca\ICrud.class
+com\ecommerce\biblioteca\dto\Categoria$CategoriaBuilder.class
+com\ecommerce\biblioteca\dto\ProductoDto$ProductoDtoBuilder.class
+com\ecommerce\biblioteca\dto\ProductoDto.class

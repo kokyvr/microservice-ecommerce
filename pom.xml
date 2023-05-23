@@ -94,5 +94,6 @@
 		<module>productos</module>
 		<module>biblioteca</module>
 		<module>categorias</module>
+		<module>config-server</module>
 	</modules>
 </project>

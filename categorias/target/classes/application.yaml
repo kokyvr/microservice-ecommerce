@@ -10,7 +10,3 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.OracleDialect
-
-server:
-  port: 8081
-    

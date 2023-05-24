@@ -1,20 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.ecommerce.app</groupId>
-    <artifactId>ecommerce</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
-  <artifactId>categorias</artifactId>
-  <name>Categoria Service</name>
-  <dependencies>
-  
-  		<dependency>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ecommerce.app</groupId>
+		<artifactId>ecommerce</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>categorias</artifactId>
+	<name>Categoria Service</name>
+	<dependencies>
+
+		<dependency>
 			<groupId>com.ecommerce.biblioteca</groupId>
 			<artifactId>biblioteca</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
@@ -29,7 +29,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
 
 
-  </dependencies>
+	</dependencies>
 </project>

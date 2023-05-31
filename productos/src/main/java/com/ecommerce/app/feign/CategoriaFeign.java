@@ -8,6 +8,7 @@ import com.ecommerce.biblioteca.dto.Categoria;
 
 @FeignClient(name = "categoria-service",url = "http://localhost:8081/ecommerce/categorias")
 public interface CategoriaFeign {
+	
 	@GetMapping("/{id}")
 	public Categoria findById(@PathVariable(value = "id") Integer id);
 	

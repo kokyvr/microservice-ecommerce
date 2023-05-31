@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.app.model.Producto;
+import com.ecommerce.app.model.ProductoWithCategoria;
 import com.ecommerce.app.service.ProductoService;
 import com.ecommerce.biblioteca.BaseRuta;
-
 
 @RestController
 @RequestMapping("/ecommerce/productos")
@@ -28,20 +28,19 @@ public class ProductoController {
 	private ProductoService service;
 
 	@PostMapping
-	public ResponseEntity<Producto> save(@RequestBody Producto producto) {
+	public ResponseEntity<ProductoWithCategoria> save(@RequestBody Producto producto) {
 		try {
-			Producto p = service.save(producto);
+			ProductoWithCategoria p = service.save(producto);
 			return ResponseEntity.created(URI.create(BaseRuta.rutaProducto + p.getId())).body(p);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return ResponseEntity.internalServerError().build();
 		}
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Producto> update(@RequestBody Producto producto, @PathVariable Integer id) {
+	public ResponseEntity<ProductoWithCategoria> update(@RequestBody Producto producto, @PathVariable Integer id) {
 		try {
-			Producto p = service.update(producto, id);
+			ProductoWithCategoria p = service.update(producto, id);
 			if (p != null) {
 				return ResponseEntity.created(URI.create(BaseRuta.rutaProducto + p.getId())).body(p);
 			}
@@ -54,9 +53,9 @@ public class ProductoController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Producto>> findAll() {
+	public ResponseEntity<List<ProductoWithCategoria>> findAll() {
 		try {
-			List<Producto> productos = service.getAll();
+			List<ProductoWithCategoria> productos = service.getAll();
 			if(!productos.isEmpty()) {
 				return ResponseEntity.ok(productos);
 			}
@@ -66,9 +65,9 @@ public class ProductoController {
 		}
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<Producto> getById(@PathVariable Integer id){
+	public ResponseEntity<ProductoWithCategoria> getById(@PathVariable Integer id){
 		try {
-			Producto p = service.getById(id);
+			ProductoWithCategoria p = service.getById(id);
 			if(p != null) {
 				return ResponseEntity.ok(p);
 			}
@@ -88,9 +87,9 @@ public class ProductoController {
 		}
 	}
 	@GetMapping("/search")
-	public ResponseEntity<Producto> getByString(@RequestParam String producto){
+	public ResponseEntity<ProductoWithCategoria> getByString(@RequestParam String producto){
 		try {
-			Producto p = service.getByString(producto);
+			ProductoWithCategoria p = service.getByString(producto);
 			if(p != null) {
 				return ResponseEntity.ok(p);
 			}

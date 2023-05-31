@@ -84,5 +84,6 @@
 		<module>biblioteca</module>
 		<module>categorias</module>
 		<module>config-server</module>
+		<module>eureka-service</module>
 	</modules>
 </project>

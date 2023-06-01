@@ -19,10 +19,10 @@ spring:
         - id: producto-service
           uri: lb://producto-service
           predicates:
-            - Path:=/ecommerce/productos/**
+            - Path=/ecommerce/productos/**
         - id: categoria-service
           uri: lb://categoria-service
           predicates:
-            - Path:=/ecommerce/categorias/**  
+            - Path=/ecommerce/categorias/**  
           
     

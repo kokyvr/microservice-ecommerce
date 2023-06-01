@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,9 @@ import com.ecommerce.app.model.Producto;
 import com.ecommerce.app.model.ProductoWithCategoria;
 import com.ecommerce.app.service.ProductoService;
 import com.ecommerce.biblioteca.BaseRuta;
+import com.ecommerce.biblioteca.dto.Categoria;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @RestController
 @RequestMapping("/ecommerce/productos")
@@ -26,7 +30,7 @@ public class ProductoController {
 
 	@Autowired
 	private ProductoService service;
-
+	
 	@PostMapping
 	public ResponseEntity<ProductoWithCategoria> save(@RequestBody Producto producto) {
 		try {
@@ -51,7 +55,8 @@ public class ProductoController {
 		}
 
 	}
-
+	
+	//@CircuitBreaker(name = "categoriaCB",fallbackMethod = "fallBackGetCategorias")
 	@GetMapping
 	public ResponseEntity<List<ProductoWithCategoria>> findAll() {
 		try {
@@ -64,6 +69,7 @@ public class ProductoController {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
+	@CircuitBreaker(name = "categoriaCB",fallbackMethod = "fallBackGetCategoria")
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductoWithCategoria> getById(@PathVariable Integer id){
 		try {
@@ -98,5 +104,8 @@ public class ProductoController {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
-
+	
+	private ResponseEntity<Categoria> fallBackGetCategoria(@PathVariable Integer id,RuntimeException ex){
+		return new ResponseEntity("El codigo Categoria : " + id + "no se encuentra disponible",HttpStatus.OK);
+	}
 }

@@ -28,7 +28,7 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public ProductoWithCategoria save(Producto data) {
 
-		Categoria categoria = feign.findById(data.getCategoriaId());
+		Categoria categoria = feignCategoria(data.getCategoriaId());
 		log.info("categoria : {}", categoria);
 		if (categoria != null) {
 			dao.save(data);
@@ -42,9 +42,9 @@ public class ProductoServiceImpl implements ProductoService {
 	public List<ProductoWithCategoria> getAll() {
 		// TODO Auto-generated method stub
 		List<Producto> p = dao.findAll();
-		return 	p.stream().map(data -> {
-			Categoria categoria = feign.findById(data.getCategoriaId());
-		
+		return p.stream().map(data -> {
+			Categoria categoria = feignCategoria(data.getCategoriaId());
+
 			return builderProductoWithCategoria(data, categoria);
 		}).collect(Collectors.toList());
 	}
@@ -54,7 +54,7 @@ public class ProductoServiceImpl implements ProductoService {
 		// TODO Auto-generated method stub
 		Producto p = dao.findById(id).orElse(null);
 		if (p != null) {
-			Categoria categoria = feign.findById(p.getCategoriaId());
+			Categoria categoria = feignCategoria(p.getCategoriaId());
 			return builderProductoWithCategoria(p, categoria);
 		}
 		return null;
@@ -65,7 +65,7 @@ public class ProductoServiceImpl implements ProductoService {
 		// TODO Auto-generated method stub
 		Producto p = dao.findByName(text).orElse(null);
 		if (p != null) {
-			Categoria categoria = feign.findById(p.getCategoriaId());
+			Categoria categoria = feignCategoria(p.getCategoriaId());
 			return builderProductoWithCategoria(p, categoria);
 		}
 
@@ -81,18 +81,15 @@ public class ProductoServiceImpl implements ProductoService {
 			search.setPrice(data.getPrice());
 			search.setStock(data.getStock());
 			search.getCategoria().setId(data.getCategoriaId());
-			
-			Categoria categoria = feign.findById(search.getCategoria().getId());
+
+			Categoria categoria = feignCategoria(search.getCategoria().getId());
 			search.getCategoria().setName(categoria.getName());
-			
-			Producto p = dao.save(Producto.builder().
-					id(search.getId()).name(search.getName()).stock(search.getStock())
-					.price(search.getPrice())
-					.categoriaId(search.getCategoria().getId())
-					.build());
-			
-			return 	ProductoWithCategoria.builder().id(p.getId()).categoria(categoria).name(p.getName()).stock(p.getStock())
-					.price(p.getPrice()).build();
+
+			Producto p = dao.save(Producto.builder().id(search.getId()).name(search.getName()).stock(search.getStock())
+					.price(search.getPrice()).categoriaId(search.getCategoria().getId()).build());
+
+			return ProductoWithCategoria.builder().id(p.getId()).categoria(categoria).name(p.getName())
+					.stock(p.getStock()).price(p.getPrice()).build();
 		}
 
 		return null;
@@ -107,6 +104,10 @@ public class ProductoServiceImpl implements ProductoService {
 	private ProductoWithCategoria builderProductoWithCategoria(Producto p, Categoria c) {
 		return ProductoWithCategoria.builder().id(p.getId()).categoria(c).name(p.getName()).stock(p.getStock())
 				.price(p.getPrice()).build();
+	}
+
+	private Categoria feignCategoria(Integer id) {
+		return feign.findById(id);
 	}
 
 }

@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ecommerce.biblioteca.dto.Categoria;
 
-@FeignClient(name = "categoria-service",url = "http://localhost:8081/ecommerce/categorias")
+@FeignClient("categoria-service")
 public interface CategoriaFeign {
 	
-	@GetMapping("/{id}")
+	@GetMapping("/ecommerce/categorias/{id}")
 	public Categoria findById(@PathVariable(value = "id") Integer id);
 	
 }

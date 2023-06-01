@@ -20,10 +20,11 @@ import com.ecommerce.app.model.Producto;
 import com.ecommerce.app.model.ProductoWithCategoria;
 import com.ecommerce.app.service.ProductoService;
 import com.ecommerce.biblioteca.BaseRuta;
-import com.ecommerce.biblioteca.dto.Categoria;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/ecommerce/productos")
 public class ProductoController {
@@ -72,12 +73,17 @@ public class ProductoController {
 	@CircuitBreaker(name = "categoriaCB",fallbackMethod = "fallBackGetCategoria")
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductoWithCategoria> getById(@PathVariable Integer id){
-		
-			ProductoWithCategoria p = service.getById(id);
-			if(p != null) {
-				return ResponseEntity.ok(p);
+			try {
+				ProductoWithCategoria p = service.getById(id);
+				if(p != null) {
+					return ResponseEntity.ok(p);
+				}
+				return ResponseEntity.notFound().build();	
+			} catch (Exception e) {
+				log.error(e.getMessage());
+				return ResponseEntity.internalServerError().build();
 			}
-			return ResponseEntity.notFound().build();
+		
 		
 		
 	}

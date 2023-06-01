@@ -85,5 +85,6 @@
 		<module>categorias</module>
 		<module>config-server</module>
 		<module>eureka-service</module>
+		<module>gateway-service</module>
 	</modules>
 </project>

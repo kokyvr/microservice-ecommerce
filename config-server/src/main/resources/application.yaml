@@ -5,7 +5,7 @@ spring:
     config:
       server: 
         git:
-          default-label: multiple-instances
+          default-label: gateway
           uri: https://github.com/kokyvr/microservice-ecommerce
           search-paths: config-data
           username: ${username}

@@ -20,6 +20,9 @@ import com.ecommerce.app.model.ProductoWithCategoria;
 import com.ecommerce.app.service.ProductoService;
 import com.ecommerce.biblioteca.BaseRuta;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/ecommerce/productos")
 public class ProductoController {
@@ -33,6 +36,7 @@ public class ProductoController {
 			ProductoWithCategoria p = service.save(producto);
 			return ResponseEntity.created(URI.create(BaseRuta.rutaProducto + p.getId())).body(p);
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			return ResponseEntity.internalServerError().build();
 		}
 	}

@@ -72,15 +72,13 @@ public class ProductoController {
 	@CircuitBreaker(name = "categoriaCB",fallbackMethod = "fallBackGetCategoria")
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductoWithCategoria> getById(@PathVariable Integer id){
-		try {
+		
 			ProductoWithCategoria p = service.getById(id);
 			if(p != null) {
 				return ResponseEntity.ok(p);
 			}
 			return ResponseEntity.notFound().build();
-		} catch (Exception e) {
-			return ResponseEntity.internalServerError().build();
-		}
+		
 		
 	}
 	@DeleteMapping("/{id}")
@@ -105,7 +103,7 @@ public class ProductoController {
 		}
 	}
 	
-	private ResponseEntity<Categoria> fallBackGetCategoria(@PathVariable Integer id,RuntimeException ex){
-		return new ResponseEntity("El codigo Categoria : " + id + "no se encuentra disponible",HttpStatus.OK);
+	private ResponseEntity<String> fallBackGetCategoria(@PathVariable Integer id,RuntimeException ex){
+		return new ResponseEntity<String>("La Categoria del Producto : " + id + "  no se encuentra disponible",HttpStatus.OK);
 	}
 }

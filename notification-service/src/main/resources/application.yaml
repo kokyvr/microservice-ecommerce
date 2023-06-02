@@ -8,8 +8,8 @@ spring:
       default-topic: productoCategoriaTopic
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties: 
-        "[spring.json.value.default.type]": event:com.ecommerce.notification.app.event.ProductoWithCategoria
+        "[spring.json.type.mapping]": event:com.ecommerce.notification.app.event.ProductoWithCategoria
       group-id: notification-id
     

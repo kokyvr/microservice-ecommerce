@@ -20,6 +20,7 @@ public class NotificationApplication {
 	}
 	
 	
+	@KafkaListener(topics = "productoCategoriaTopic")
 	public void handleNotification(ProductoWithCategoria p) {
 		log.info("Notificacion recibida desde Producto  - {} ",p);
 	}

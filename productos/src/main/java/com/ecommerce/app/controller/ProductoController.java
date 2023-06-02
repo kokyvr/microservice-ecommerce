@@ -38,6 +38,7 @@ public class ProductoController {
 			ProductoWithCategoria p = service.save(producto);
 			return ResponseEntity.created(URI.create(BaseRuta.rutaProducto + p.getId())).body(p);
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			return ResponseEntity.internalServerError().build();
 		}
 	}

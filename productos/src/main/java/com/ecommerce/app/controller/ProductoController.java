@@ -73,16 +73,11 @@ public class ProductoController {
 	@CircuitBreaker(name = "categoriaCB",fallbackMethod = "fallBackGetCategoria")
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductoWithCategoria> getById(@PathVariable Integer id){
-			try {
 				ProductoWithCategoria p = service.getById(id);
 				if(p != null) {
 					return ResponseEntity.ok(p);
 				}
 				return ResponseEntity.notFound().build();	
-			} catch (Exception e) {
-				log.error(e.getMessage());
-				return ResponseEntity.internalServerError().build();
-			}
 		
 		
 		

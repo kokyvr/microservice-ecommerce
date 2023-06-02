@@ -3,3 +3,13 @@ spring:
     config:
       enabled: true
       uri: http://localhost:8082
+  kafka:
+    bootstrap-servers:
+    - localhost:9092      
+    template:
+      default-topic: productoCategoriaTopic
+    producer:
+      key-serializer: org.apache.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties: 
+        "[spring.json.value.default.type]": event:com.ecommerce.app.model.ProductoWithCategoria

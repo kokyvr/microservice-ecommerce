@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ecommerce.app.feign.CategoriaFeign;
 import com.ecommerce.app.model.Producto;
@@ -17,8 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@Transactional
 public class ProductoServiceImpl implements ProductoService {
 
+	@Autowired
+	private KafkaTemplate<String, ProductoWithCategoria> kafkaTemplate;
 	@Autowired
 	private ProductoDao dao;
 
@@ -32,7 +37,7 @@ public class ProductoServiceImpl implements ProductoService {
 		log.info("categoria : {}", categoria);
 		if (categoria != null) {
 			dao.save(data);
-
+			kafkaTemplate.send("productoCategoriaTopic",builderProductoWithCategoria(data, categoria));
 			return builderProductoWithCategoria(data, categoria);
 		}
 		return null;
